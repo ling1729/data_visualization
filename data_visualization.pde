@@ -12,6 +12,7 @@ int miny=0;
 void setup(){
   size(500, 500);
 }
+
 int ypad=40;
 int startx=xpad+40;
 int starty=cy-ypad-dpad;
@@ -41,6 +42,7 @@ void graph(){
   //vertex();
 }
 void draw(){
+  background(230);
   strokeWeight(3);
   stroke(0,0,0);
   line(startx,starty,startx,endy);  //ycoord
