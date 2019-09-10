@@ -3,21 +3,65 @@ float[] templow={46,48,49,49,51,53,54,55,55,54,50,46,51};
 int cw=500;
 int cy=500;
 int xpad=20;
+int dpad=20;
+int upad=20;
+int maxx=12;
+int maxy=100;
+int minx=0;
+int miny=0;
 void setup(){
   size(500, 500);
 }
 int ypad=40;
+int startx=xpad+40;
+int starty=cy-ypad-dpad;
+int endx=cw-(xpad+40);
+int endy=ypad-dpad+upad;
+void graph(){
+  noFill();
+  beginShape();
+  strokeWeight(2);
+  for(int i=0;i<temphigh.length;i++){
+    stroke(255, 0, 0);
+    noFill();
+    vertex(startx+(endx-startx)/12*i,(starty-endy)/(maxy-miny)*temphigh[i]);
+    circle(startx+(endx-startx)/12*i, (starty-endy)/(maxy-miny)*temphigh[i], 5);
+  }
+  endShape();
+  noFill();
+  beginShape();
+  strokeWeight(2);
+  for(int i=0;i<templow.length;i++){
+    stroke(0, 0, 255);
+    noFill();
+    vertex(startx+(endx-startx)/12*i,(starty-endy)/(maxy-miny)*templow[i]);
+    circle(startx+(endx-startx)/12*i, (starty-endy)/(maxy-miny)*templow[i], 5);
+  }
+  endShape();
+  //vertex();
+}
 void draw(){
-  line(xpad+40,cy-ypad,xpad+40,ypad);  //ycoord
-  line(xpad+40,cy-ypad,cw-(xpad+40),cw-ypad);  //ycoord
+  strokeWeight(3);
+  stroke(0,0,0);
+  line(startx,starty,startx,endy);  //ycoord
+  line(startx,starty,endx,starty);  //xcoord
   
-  strokeWeight(4);
-  numy(0,100,10);
+  strokeWeight(2);
+  numy(miny,maxy,10);
+  numx(minx,maxx,12);
+  graph();
 }
 void numy(float x, float y, float num){
   for(int i=0; i<num+1;i+=1){
     stroke(0);
     fill(0);
-    text((int)((y-x)/num*i+x), xpad+10, cy-(cy-ypad)/(num+1)*i-ypad); 
+    text((int)((y-x)/num*i+x), startx-30, (endy-starty)/num*i+starty); 
+  }
+}
+void numx(float x, float y, float num){
+  for(int i=0; i<num+1;i+=1){
+    stroke(0);
+    fill(0);
+    text((int)((y-x)/num*i+x), (endx-startx)/num*i+startx, (starty+30));
   }
 }
