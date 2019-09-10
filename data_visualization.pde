@@ -2,13 +2,13 @@ float[] temphigh={57,60,62,63,64,66,67,68,70,69,63,57};
 float[] templow={46,48,49,49,51,53,54,55,55,54,50,46};
 int cw=500;
 int cy=500;
-int xpad=20;
-int dpad=20;
-int upad=20;
+int xpad=50;
+int dpad=50;
+int upad=50;
 int maxx=12;
 int maxy=100;
 int minx=1;
-int miny=0;
+int miny=30;
 void setup(){
   size(500, 500);
 }
@@ -16,7 +16,7 @@ void setup(){
 int ypad=40;
 int startx=xpad+40;
 int starty=cy-ypad-dpad;
-int endx=cw-(xpad+40);
+int endx=cw-(xpad);
 int endy=ypad-dpad+upad;
 void graph(){
   noFill();
@@ -25,20 +25,30 @@ void graph(){
   for(int i=0;i<temphigh.length;i++){
     stroke(255, 0, 0);
     noFill();
-    vertex(startx+(endx-startx)/12*i,starty-(starty-endy)/(maxy-miny)*temphigh[i]);
-    circle(startx+(endx-startx)/12*i, starty-(starty-endy)/(maxy-miny)*temphigh[i], 5);
+    vertex(startx+(endx-startx)/12*i,starty-(starty-endy)/(float)(maxy-miny)*(temphigh[i]-miny));
+    circle(startx+(endx-startx)/12*i, starty-(starty-endy)/(float)(maxy-miny)*(temphigh[i]-miny), 5);
   }
   endShape();
+  for(int i=0;i<temphigh.length;i++){
+    stroke(255, 0, 0);
+    fill(255,0,0);
+    circle(startx+(endx-startx)/12*i, starty-(starty-endy)/(float)(maxy-miny)*(temphigh[i]-miny), 5);
+  }
   noFill();
   beginShape();
   strokeWeight(2);
   for(int i=0;i<templow.length;i++){
     stroke(0, 0, 255);
     noFill();
-    vertex(startx+(endx-startx)/12*i,starty-(starty-endy)/(maxy-miny)*templow[i]);
-    circle(startx+(endx-startx)/12*i, starty-(starty-endy)/(maxy-miny)*templow[i], 5);
+    vertex(startx+(endx-startx)/12*i,starty-(starty-endy)/(float)(maxy-miny)*(templow[i]-miny));
+    circle(startx+(endx-startx)/12*i, starty-(starty-endy)/(float)(maxy-miny)*(templow[i]-miny), 5);
   }
   endShape();
+  for(int i=0;i<templow.length;i++){
+    stroke(0, 0, 255);
+    fill(0,0,255);
+    circle(startx+(endx-startx)/12*i, starty-(starty-endy)/(float)(maxy-miny)*(templow[i]-miny), 5);
+  }
   //vertex();
 }
 void draw(){
@@ -52,18 +62,25 @@ void draw(){
   numy(miny,maxy,10);
   numx(minx,maxx,12);
   graph();
+  fill(0);
+  textSize(15);
+  text("Average temperatures in San Francisco by month",120,50);
 }
 void numy(float x, float y, float num){
-  for(int i=0; i<num;i+=1){
+  textSize(13);
+  for(int i=0; i<num+1;i+=1){
     stroke(0);
     fill(0);
     text((int)((y-x)/num*i+x), startx-30, (endy-starty)/num*i+starty); 
   }
 }
 void numx(float x, float y, float num){
+  textSize(13);
   for(int i=1; i<num+1;i+=1){
     stroke(0);
     fill(0);
-    text((int)((y-x)/num*i+x), (endx-startx)/num*(i-1)+startx, (starty+30));
+    text((int)((y-x)/num*i+x), (endx-startx)/num*(i-1)+startx, (starty+25));
   }
+  textSize(15);
+  text("Month of the Year", 180, 470);
 }
