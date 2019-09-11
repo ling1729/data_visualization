@@ -65,6 +65,15 @@ void draw(){
   fill(0);
   textSize(15);
   text("Average temperatures in San Francisco by month",120,50);
+  int x = 40;     // Location of start of text.
+  int y = 320;
+  
+  pushMatrix();
+  translate(x,y);
+  rotate(-HALF_PI);
+  translate(-x,-y);
+  text("Average Temperature (F)", x,y);
+  popMatrix();
 }
 void numy(float x, float y, float num){
   textSize(13);
